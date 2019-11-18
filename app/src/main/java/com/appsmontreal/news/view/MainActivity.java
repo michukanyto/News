@@ -1,8 +1,10 @@
-package com.appsmontreal.news;
+package com.appsmontreal.news.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.appsmontreal.news.R;
 
 public class MainActivity extends AppCompatActivity {
 

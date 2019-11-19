@@ -32,7 +32,7 @@ public class DownloadTask extends AsyncTask <String, Void, String> {
                 char current = (char) data;
                 result += current;
                 data = inputStreamReader.read();
-                Log.i("Log URL CONTENT ====> ", result);
+                Log.i("URL CONTENT ====> ", result);
                 return result;
 
             }

@@ -1,13 +1,13 @@
 package com.appsmontreal.news.model;
 
-public class New {
+public class News {
 
     private String id;
     private String title;
     private String url;
 
 
-    public New(String id, String title, String url) {
+    public News(String id, String title, String url) {
         this.id = id;
         this.title = title;
         this.url = url;

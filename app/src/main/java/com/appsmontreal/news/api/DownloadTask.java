@@ -3,6 +3,7 @@ package com.appsmontreal.news.api;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.appsmontreal.news.model.IModelListener;
 import com.appsmontreal.news.model.News;
 
 import org.json.JSONArray;
@@ -22,6 +23,11 @@ public class DownloadTask extends AsyncTask <String, Void, String> {
     private URL url;
     private HttpURLConnection urlConnection;
     private ArrayList<News> news;
+    private IModelListener modelListener;
+
+    public void setModelListener(IModelListener modelListener) {
+        this.modelListener = modelListener;
+    }
 
 
     @Override
@@ -57,7 +63,7 @@ public class DownloadTask extends AsyncTask <String, Void, String> {
             for (int i= 0; i < numberOfItem; i++) {
                 String articleId = jsonArray.getString(i);
                 url = new URL("https://hacker-news.firebaseio.com/v0/item/" + articleId + ".json?print=pretty");
-                
+
                 urlConnection = (HttpURLConnection) url.openConnection();
                 inputStream = urlConnection.getInputStream();
                 inputStreamReader = new InputStreamReader(inputStream);
@@ -84,6 +90,7 @@ public class DownloadTask extends AsyncTask <String, Void, String> {
                     Log.i("URL  ====> ", url + " ===> " + title);
                 }
             }
+            modelListener.onGetAllNews(news);//////////prepare all news
             return result;
 
         }catch (Exception e){
@@ -116,7 +123,9 @@ public class DownloadTask extends AsyncTask <String, Void, String> {
     }
 
 
-    public ArrayList<News> getNews() {
-        return news;
+    public void getAllNews(IModelListener modelListener) {
+        modelListener.onGetAllNews(this.news);
+
     }
+
 }

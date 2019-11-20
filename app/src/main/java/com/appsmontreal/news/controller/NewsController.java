@@ -1,13 +1,15 @@
 package com.appsmontreal.news.controller;
 
 import com.appsmontreal.news.api.DownloadTask;
+import com.appsmontreal.news.model.IModelListener;
 import com.appsmontreal.news.model.News;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewsController {
     private DownloadTask task;
+    private IModelListener modelListener;
+    private List<News> news;
 
     public NewsController(String url) {
         task = new DownloadTask();
@@ -18,16 +20,11 @@ public class NewsController {
         }
     }
 
-    public ArrayList<News> readAllNews() {
-
-        return task.getNews();
+    public void readAllNews(IModelListener modelListener) {
+//        task.getAllNews(modelListener);
+        task.setModelListener(modelListener);
     }
 
-    public void addNews(String id, String title, String url) {
 
-    }
 
-    public News readNews(String id) {
-        return null;
-    }
 }

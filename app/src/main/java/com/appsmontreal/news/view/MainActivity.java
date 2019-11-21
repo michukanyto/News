@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.appsmontreal.news.NewsActivity;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements IModelListener{
     private ArrayList<String> newsTitles;
     private ArrayAdapter<String> arrayAdapter;
     private Intent intent;
+    private EditText filterEditText;
 
 
     @Override
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements IModelListener{
         listview = findViewById(R.id.listView);
         newsController = new NewsController(SOURCE);
         newsController.readAllNews(this);//Initializing modelListener in DownloadTask
+
 //        newsController.readAllNews(new IModelListener() {
 //            @Override
 //            public void onGetAllNews(List<News> news) {
@@ -49,6 +54,26 @@ public class MainActivity extends AppCompatActivity implements IModelListener{
 //            }
 //        });
 
+    }
+
+    private void prepareFilter() {
+        filterEditText = findViewById(R.id.filterEditText);
+        filterEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                (MainActivity.this).arrayAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -78,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements IModelListener{
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, newsTitles);
         listenUpUserChoice();
         listview.setAdapter(arrayAdapter);
+        prepareFilter();
 
     }
 }
